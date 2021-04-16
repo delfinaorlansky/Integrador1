@@ -2,6 +2,8 @@ import React from "react";
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'; //Requerido para css de bootstrap//
 import Home from "./pages/Home"
+import Users from "./pages/Users"
+import About from "./pages/About"
 import {
   BrowserRouter as Router,
   Switch,
@@ -32,6 +34,7 @@ export default function App() {
     <Nav className="mr-auto">
       <Nav.Link ><Link to="/">Home</Link></Nav.Link>
       <Nav.Link > <Link to="/about">About</Link></Nav.Link>
+      <Nav.Link> <Link to="/users">Users</Link></Nav.Link>
       <NavDropdown title="Dropdown" id="basic-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -66,11 +69,5 @@ export default function App() {
 
 
 
-function About() {
-  return <h2>About</h2>;
-}
 
-function Users() {
-  return <h2>Users</h2>;
-}
 
