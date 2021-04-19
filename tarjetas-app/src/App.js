@@ -10,8 +10,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import './App.css';
 export default function App() {
+  
   return (
+
     <Router>
       <div>
         {/* <nav>
@@ -27,14 +30,16 @@ export default function App() {
             </li>
           </ul>
         </nav>  */}
-        <Navbar bg="light" expand="lg">
-  <Navbar.Brand href="#home">MyWallet.com</Navbar.Brand>
+        <Navbar className= "Navbar"  expand="lg">
+  <Navbar.Brand  href="#home">
+    <h2> MyWallet.com </h2>
+    </Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
-      <Nav.Link ><Link to="/">Home</Link></Nav.Link>
-      <Nav.Link > <Link to="/about">About</Link></Nav.Link>
-      <Nav.Link> <Link to="/users">Users</Link></Nav.Link>
+      <Nav.Link ><Link to="/home" className="link"  >Home</Link></Nav.Link>
+      <Nav.Link > <Link to="/about"className="link" >About</Link></Nav.Link>
+      <Nav.Link> <Link to="/users"className="link" >Users</Link></Nav.Link>
       <NavDropdown title="Dropdown" id="basic-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
