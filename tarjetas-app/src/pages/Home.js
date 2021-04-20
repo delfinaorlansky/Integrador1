@@ -18,7 +18,7 @@ export default function Home() {
                 <Card style={{ width: '18rem'}}>
                 <Card.Img variant="top" src={card.picture.large}/>
                 <Card.Body>
-                  <Card.Title>{card.name.title} {card.name.first} {card.name.last} </Card.Title>
+                  <Card.Title>{card.name.first} {card.name.last} </Card.Title>
                   <Card.Text> 
                   <a href={ "mailto:"+ card.email}>{card.email} </a>
                   <br></br> 
