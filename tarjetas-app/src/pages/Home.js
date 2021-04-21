@@ -1,11 +1,16 @@
 import React, { useState, useEffect} from 'react';
-import {Container,Row,Col,Card, Button,Accordion} from 'react-bootstrap';
+import {Container,Row,Col,Card, Button,Accordion, Form} from 'react-bootstrap';
 import {format} from 'date-fns';
 
 export default function Home() {
+    /** Sección de variables de estado */
     const [cards, setCards] = useState([]); 
     const [quantity,setQuantity] = useState(9);
-    const viewMore = () => { setQuantity(quantity +3); filldata(); };
+    const [quantityToAdd,setQuantityToAdd] = useState(1); //Agrego una vairable al estado del componenente home 
+    // que es la cantidad a agregar
+
+    /**Sección de funciones del componente */
+    const viewMore = () => { setQuantity(quantity +3); filldata(); }; //para ver tres mas cada vez que hacemos clik en ver mas
     const filldata = () => {  fetch('https://randomuser.me/api/?results= ' +quantity)
     .then(response => response.json())
     .then(data => setCards(data.results)); };
@@ -15,28 +20,44 @@ export default function Home() {
        
     }
       ,[]);
-      const removeCard = uuid => {
+    const removeCard = uuid => {
 
         const cardsRemoved = cards.filter(card => card.login.uuid !== 
     uuid);
          setCards(cardsRemoved);
       };
+
+      const addMore = ()=>{
+        fetch('https://randomuser.me/api/?results= ' +quantityToAdd)
+    .then(response => response.json())
+    .then(data => {
+      cards=[...cards,data.results];
     
+    }); 
 
-
+      };
 
     return (
-
      <Container>
-          {/* <Row><Col><Form>
-  <Form.Group controlId="formBasicEmail">
-    <Form.Label>Email address</Form.Label>
-    <Form.Control type="email" placeholder="Enter email" />
-    <Form.Text className="text-muted">
-      We'll never share your email with anyone else.
-    </Form.Text>
-  </Form.Group>
-  </Form>
+        <Row> 
+          <Col>
+          <Form>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Ingrese Cantidad de tarjetas a agregar</Form.Label>
+            <Form.Control value={quantityToAdd} type="number" min="1" max="100" placeholder="Ingrese cantidad" 
+            onChange={(e)=>{
+              if(e.target.value!='')
+                setQuantityToAdd(e.target.value);
+              }} />  
+             {/* e= evento on change  */}
+            <Button type="button" onClick={()=>addMore()}>Agregar</Button>
+          </Form.Group>
+          </Form>
+          </Col>
+        </Row>
+       
+          {/* <Row>
+          <Col>
   </Col></Row> */}
        <Row>
        {cards.map((card) => (
@@ -72,8 +93,11 @@ removeCard(card.login.uuid)}>X</Button>
               </Col>
 ))}   
      </Row>
-
-     <Row> <Col><Button type="button" onClick={viewMore} >Ver mas</Button></Col></Row>
+<Row>
+    <Col>
+      <Button type="button" onClick={viewMore} >Ver mas</Button>
+     </Col>
+</Row>
     
 
 
