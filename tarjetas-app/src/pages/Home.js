@@ -2,39 +2,8 @@ import React, { useState, useEffect} from 'react';
 import {Container,Row,Col,Card, Button,Accordion, Form} from 'react-bootstrap';
 import {format} from 'date-fns';
 
-export default function Home() {
-    /** Sección de variables de estado */
-    const [cards, setCards] = useState([]); 
-    const [quantity,setQuantity] = useState(9);
-    const [quantityToAdd,setQuantityToAdd] = useState(1); //Agrego una vairable al estado del componenente home 
-    // que es la cantidad a agregar
-
-    /**Sección de funciones del componente */
-    const viewMore = () => { setQuantity(quantity +3); filldata(); }; //para ver tres mas cada vez que hacemos clik en ver mas
-    const filldata = () => {  fetch('https://randomuser.me/api/?results= ' +quantity)
-    .then(response => response.json())
-    .then(data => setCards(data.results)); };
-    useEffect(() => {
-    
-    filldata();
-       
-    }
-      ,[]);
-    const removeCard = uuid => {
-
-        const cardsRemoved = cards.filter(card => card.login.uuid !== 
-    uuid);
-         setCards(cardsRemoved);
-      };
-
-      const addMore = ()=>{
-        fetch('https://randomuser.me/api/?results= ' +quantityToAdd)
-    .then(response => response.json())
-    .then(data => {
-      setCards([...cards,...data.results]);    
-    }); 
-
-      };
+export default function Home({cards, filldata, quantity, quantityToAdd, viewMore, addMore, removeCard, addQuantity  }) {
+  
 
     return (
      <Container>
@@ -46,7 +15,7 @@ export default function Home() {
             <Form.Control type="number" min="1" max="100" placeholder="Ingrese cantidad" 
             onChange={(e)=>{
               if(e.target.value!='')
-                setQuantityToAdd(e.target.value);
+                addQuantity(e.target.value);
               }} />  
              {/* e= evento on change  */}
             <Button type="button" onClick={()=>addMore()}>Agregar</Button>

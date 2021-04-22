@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css'; //Requerido para css de bootstrap//
 import Home from "./pages/Home"
@@ -12,7 +12,64 @@ import {
 } from "react-router-dom";
 import './App.css';
 export default function App() {
+  // Seccion de variables
+  const [cards, setCards] = useState([]); 
+  const [quantity,setQuantity] = useState(9);
+  const [nombre, setNombre ] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [edad, setEdad ] = useState("");
+  const [quantityToAdd,setQuantityToAdd] = useState(1); //Agrego una vairable al estado del componenente home 
+
+    // que es la cantidad a agregar
+
+  //Seccion de funciones
+
+  const search= ()=> {
+    setCards(cards.filter(filter=>filter.name.first.toUpperCase()==nombre.toUpperCase() || filter.name.last.toUpperCase()==apellido.toUpperCase() || filter.dob.age== edad))
   
+  }
+
+  const filldata = () => {  fetch('https://randomuser.me/api/?results= ' +quantity)
+  .then(response => response.json())
+  .then(data => setCards(data.results)); };
+  useEffect(() => {
+  
+  filldata();
+     
+  }
+    ,[]);
+   /**Sección de funciones del componente */
+   const viewMore = () => { setQuantity(quantity +3); filldata(); }; //para ver tres mas cada vez que hacemos clik en ver mas
+ 
+   const removeCard = uuid => {
+
+       const cardsRemoved = cards.filter(card => card.login.uuid !== 
+   uuid);
+        setCards(cardsRemoved);
+     };
+
+     const addMore = ()=>{
+       fetch('https://randomuser.me/api/?results= ' +quantityToAdd)
+   .then(response => response.json())
+   .then(data => {
+     setCards([...cards,...data.results]);    
+   }); 
+
+     };
+
+     const addQuantity = (value) => setQuantityToAdd(value);
+
+     const orderByName = () => setCards(cards.sort((a,b)=>{
+       console.log (a.name.first)
+      if (a.name.first < b.name.first)
+       return -1;
+       if (a.name.first > b.name.first)
+       return 1;
+       return 0;
+      
+       
+     }));
+
   return (
 
     <Router>
@@ -49,8 +106,11 @@ export default function App() {
       </NavDropdown>
     </Nav>
     <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      <Button variant="outline-success">Search</Button>
+      <FormControl type="text" placeholder="Nombre" className="mr-sm-2" onChange={(e)=>setNombre(e.target.value)} />
+      <FormControl type="text" placeholder="Apellido" className="mr-sm-2" onChange={(e)=>setApellido(e.target.value)} />
+      <FormControl type="text" placeholder="Edad" className="mr-sm-2" onChange={(e)=>setEdad(e.target.value)}/>
+      <Button variant="outline-success" onClick={()=> search()}>Search</Button> 
+      <Button variant="outline-success" onClick={()=> orderByName()}> Order By Name </Button>
     </Form>
   </Navbar.Collapse>
 </Navbar>
@@ -64,7 +124,7 @@ export default function App() {
             <Users />
           </Route>
           <Route path="/">
-            <Home />
+            <Home cards={cards} filldata={filldata} quantity={quantity} quantityToAdd={quantityToAdd} viewMore={viewMore} addMore={addMore} removeCard={removeCard} addQuantity={addQuantity}/>
           </Route>
         </Switch>
       </div>
