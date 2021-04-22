@@ -31,8 +31,7 @@ export default function Home() {
         fetch('https://randomuser.me/api/?results= ' +quantityToAdd)
     .then(response => response.json())
     .then(data => {
-      cards=[...cards,data.results];
-    
+      setCards([...cards,...data.results]);    
     }); 
 
       };
@@ -44,7 +43,7 @@ export default function Home() {
           <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Ingrese Cantidad de tarjetas a agregar</Form.Label>
-            <Form.Control value={quantityToAdd} type="number" min="1" max="100" placeholder="Ingrese cantidad" 
+            <Form.Control type="number" min="1" max="100" placeholder="Ingrese cantidad" 
             onChange={(e)=>{
               if(e.target.value!='')
                 setQuantityToAdd(e.target.value);
