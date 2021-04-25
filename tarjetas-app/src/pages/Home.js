@@ -32,9 +32,9 @@ export default function Home({cards, filldata, quantity, quantityToAdd, viewMore
               <Col className="p-3">
                 <Accordion defaultActiveKey="1">
                 <Card style={{ width: '18rem'}}>
-                <Card.Img variant="top" src={card.picture.large}/>
+                <Card.Img variant="top" src={card.picture.large} />
                 <Card.Body>
-                  <Card.Title>{card.name.first} {card.name.last} <Button  onClick={() =>
+                  <Card.Title> {card.name.first} {card.name.last} <Button  onClick={() =>
 removeCard(card.login.uuid)}>X</Button>
  </Card.Title>
                   <Card.Text> 
