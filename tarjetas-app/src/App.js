@@ -73,7 +73,7 @@ export default function App() {
         return 0;
     });
       console.log('array ordenado:',orderedCards); // aca se ordena by name
-      setCards(orderedCards); 
+      setCards([...orderedCards]); 
     }
       ;
      
