@@ -59,16 +59,24 @@ export default function App() {
 
      const addQuantity = (value) => setQuantityToAdd(value);
 
-     const orderByName = () => setCards(cards.sort((a,b)=>{
-       console.log (a.name.first)
-      if (a.name.first < b.name.first)
-       return -1;
-       if (a.name.first > b.name.first)
-       return 1;
-       return 0;
-      
-       
-     }));
+     const orderByName = () => {
+       let orderedCards = cards.sort((a, b) => {
+        let fa = a.name.first.toLowerCase(),
+            fb = b.name.first.toLowerCase();
+    
+        if (fa < fb) {
+            return -1;
+        }
+        if (fa > fb) {
+            return 1;
+        }
+        return 0;
+    });
+      console.log('array ordenado:',orderedCards); // aca se ordena by name
+      setCards(orderedCards); 
+    }
+      ;
+     
 
   return (
 
@@ -110,7 +118,7 @@ export default function App() {
       <FormControl type="text" placeholder="Apellido" className="mr-sm-2" onChange={(e)=>setApellido(e.target.value)} />
       <FormControl type="text" placeholder="Edad" className="mr-sm-2" onChange={(e)=>setEdad(e.target.value)}/>
       <Button variant="outline-success" onClick={()=> search()}>Search</Button> 
-      <Button variant="outline-success" onClick={()=> orderByName()}> Order By Name </Button>
+      <Button variant="outline-success" type="button" onClick={()=> orderByName()}> Order By Name </Button>
     </Form>
   </Navbar.Collapse>
 </Navbar>
